@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtWidgets import QMainWindow, QTabWidget, QLabel
 from ControlPanel import ControlPanel
 
 
@@ -9,5 +9,17 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Heizungssteuerung")
 
 
-        control_panel = ControlPanel()
-        self.setCentralWidget(control_panel)
+        tab_widget = QTabWidget()
+
+        tab_control = ControlPanel()
+        tab_widget.addTab(tab_control, "ControlPanel")
+
+
+        tab_temp = QLabel("Inhalt für Tab 2")
+        tab_widget.addTab(tab_temp, "Temperaturverlauf")
+
+        tab_anlage = QLabel("Inhalt für Tab 3")
+        tab_widget.addTab(tab_anlage, "Heizungsanlage")
+
+
+        self.setCentralWidget(tab_widget)
