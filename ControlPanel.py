@@ -1,6 +1,5 @@
-# controlpanel.py
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
-from SteuerElement import SteuerElement
+from SteuerElement import SteuerElement, CentralWidget
 
 
 class ControlPanel(QWidget):
@@ -25,3 +24,21 @@ class ControlPanel(QWidget):
 
 
         self.setLayout(layout)
+
+class TemperatureCourse(QWidget):
+    def __init__(self, parent=None):
+        super(TemperatureCourse, self).__init__(parent)
+
+        layout = QHBoxLayout(self)
+
+        # Erstellen Sie hier Ihr zentrales Widget oder andere Widgets.
+        self.central_widget = CentralWidget(parent)
+        layout.addWidget(self.central_widget)
+
+        # Fügen Sie hier zusätzliche Widgets zum Layout hinzu, falls erforderlich.
+        # Beispiel: layout.addWidget(ein_anderes_widget)
+
+        self.setLayout(layout)
+        self.setWindowTitle("Einführung in QCharts")
+
+
