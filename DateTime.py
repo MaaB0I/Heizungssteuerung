@@ -9,13 +9,18 @@ class DateTime(QChartView):
         super().__init__(parent)
 
         self.series = QSplineSeries()
+        self.series.setName("Values from Slider")
+
+        self.random_series = QLineSeries()
+        self.random_series.setName("Random Values")
 
         chart = QChart()
-        chart.setTitle("Die wunderbare Welt der Mathematik")
+        chart.setTitle("Zeit-Werte-Diagramme mit QChart")
         chart.addSeries(self.series)
+        chart.addSeries(self.random_series)
 
         self.date_time_axis = QDateTimeAxis()
-        self.date_time_axis.setFormat("d.MM hh:mm")
+        self.date_time_axis.setFormat("hh:mm:ss")
 
         start_date_time = QDateTime().currentDateTime()
 
@@ -27,13 +32,13 @@ class DateTime(QChartView):
         axis_y.setRange(-5, 5)
 
         chart.addAxis(self.date_time_axis, Qt.AlignmentFlag.AlignTop)
-
         chart.addAxis(axis_y, Qt.AlignmentFlag.AlignLeft)
 
         self.series.attachAxis(self.date_time_axis)
         self.series.attachAxis(axis_y)
 
-        self.series.setName("Values from Slider")
+        self.random_series.attachAxis(self.date_time_axis)
+        self.random_series.attachAxis(axis_y)
 
         self.setChart(chart)
 
@@ -46,7 +51,11 @@ class DateTime(QChartView):
 
         self.date_time_axis.setRange(start_time, current_time)
 
-# Übungen
-# 1) Fügen Sie in der Klasse DateTime eine zweite Series hinzu. Die
-#    Serie trägt den Anzeigenamen "Zufallszahlen".
-# 2) Erstellen Sie einen QTimer, welcher alle 10 Sekunden Zufallszahlen zwischen -5 und 5 generiert.
+    @pyqtSlot(int)
+    def add_random_value(self, value):
+        current_time = QDateTime.currentDateTime()
+        start_time = current_time.addSecs(-30)
+
+        self.random_series.append(current_time.toMSecsSinceEpoch(), value)
+
+        self.date_time_axis.setRange(start_time, current_time)

@@ -22,8 +22,13 @@ class ControlPanel(QWidget):
         control_bad = SteuerElement('Bad', 23, 24)
         layout.addWidget(control_bad)
 
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.generate_random)
+        self.timer.start(1 * 1000)
 
         self.setLayout(layout)
+
+
 
 class TemperatureCourse(QWidget):
     def __init__(self, parent=None):
@@ -31,12 +36,8 @@ class TemperatureCourse(QWidget):
 
         layout = QHBoxLayout(self)
 
-        # Erstellen Sie hier Ihr zentrales Widget oder andere Widgets.
         self.central_widget = CentralWidget(parent)
         layout.addWidget(self.central_widget)
-
-        # Fügen Sie hier zusätzliche Widgets zum Layout hinzu, falls erforderlich.
-        # Beispiel: layout.addWidget(ein_anderes_widget)
 
         self.setLayout(layout)
         self.setWindowTitle("Einführung in QCharts")

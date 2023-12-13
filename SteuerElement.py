@@ -3,7 +3,7 @@ from xmlrpc.client import DateTime
 from DateTime import DateTime
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QDial, QLCDNumber, QHBoxLayout, QSlider
 from PyQt6.QtCharts import QLineSeries, QChart, QChartView, QSplineSeries, QValueAxis, QAbstractAxis
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import QWidget
 
 
@@ -42,10 +42,13 @@ class SteuerElement(QWidget):
         self.lcd_soll_temp.display(value)  # Aktualisiert die angezeigte Soll-Temperatur
 
 class CentralWidget(QWidget):
+
+    send_random = pyqtSignal(int)
     def __init__(self, parent=None):
         super().__init__(parent)
 
         self.datetime = DateTime(parent)
+        self.send_random.connect(self.datetime.add_random_value)
 
         self.slider = QSlider()
         self.slider.setRange(-5, 5)
